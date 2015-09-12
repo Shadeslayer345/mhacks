@@ -1,0 +1,11 @@
+*.csproj
+*.dwlt
+*.ejs
+web_template/node_modules/*/*
+unity_template/Library/*/*
+*.dll
+*.meta
+*.mdb
+*.sln
+*.userprefs
+*.log
