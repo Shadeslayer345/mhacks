@@ -1,9 +1,9 @@
 /*
 Copyright (C) 2015 Electronic Arts Inc.  All rights reserved.
- 
+
 This software is solely licensed pursuant to the Hackathon License Agreement,
 Available at:  www.eapathfinders.com/license
-All other use is strictly prohibited. 
+All other use is strictly prohibited.
 */
 
 require('log-timestamp');
@@ -40,7 +40,7 @@ setInterval(function() {
 	for (var index in clients) {
 		if (clients[index] !== null) {
 			clients[index].ping = Date.now();
-			clients[index].emit('ping');			
+			clients[index].emit('ping');
 		}
 	}
 	printClients();
@@ -69,9 +69,9 @@ io.on('connection', function(socket) {
 				console.log("[Controller] Controller " + index + " is already connected, but the server recieved another connection request. Terminating old connection and starting new one.");
 			}
 			else {
-				console.log("[Controller] Controller " + index + " re-connected. Socket = " + socket.id);	
+				console.log("[Controller] Controller " + index + " re-connected. Socket = " + socket.id);
 			}
-			
+
 		}
 		else {
 			console.log("[Controller] Controller " + index + " connected. Socket = " + socket.id);
@@ -87,7 +87,7 @@ io.on('connection', function(socket) {
 			for (var index in clients) {
 				if (clients[index] !== null && clients[index].id === socket.id) {
 					clients[index] = null;
-					console.log("[Controller] Controller " + index + " has disconnected.");					
+					console.log("[Controller] Controller " + index + " has disconnected.");
 				}
 			}
 		}
@@ -98,18 +98,18 @@ io.on('connection', function(socket) {
 	})
 
 	// Send game messages from the controllers to Unity and vice versa.
-	socket.on('game_message', function(msg) {		
+	socket.on('game_message', function(msg) {
 		if ("unity" in clients) {
-			// If the message is from Unity, send it to the controllers.	
+			// If the message is from Unity, send it to the controllers.
 			if (socket.id === clients["unity"].id) {
 				console.log("[Message] Sending message U -> C: " + JSON.stringify(msg));
-				socket.broadcast.emit('game_message', {"data": msg.data});				
+				socket.broadcast.emit('game_message', {"data": msg.data});
 			}
 			// If the message is from a controller, send it to Unity.
 			else {
 				console.log("[Message] Sending message C(" + msg.index + ") -> U: " + JSON.stringify(msg));
 				clients["unity"].emit("game_message", msg);
-			}			
+			}
 		}
 		else {
 			console.log("[Warning] Unity hasn't connected yet. Cannot send message. " + JSON.stringify(msg));
@@ -123,7 +123,7 @@ io.on('connection', function(socket) {
 			if (clients[index] !== null) {
 				if (clients[index].id === socket.id) {
 					clients[index].latency = now - socket.ping;
-				}				
+				}
 			}
 
 		}
