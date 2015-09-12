@@ -1,11 +1,33 @@
-*.csproj
-*.dwlt
-*.ejs
-web_template/node_modules/*/*
-unity_template/Library/*/*
-*.dll
+# Unity stuff
+[Tt]emp/
+[Ob]ject/
+[Bb]uild/
+[Ll]ibrary/
+sysinfo.txt
+
+[Ee]xported[Oo]bj/
+.vs/
+/*.userperfs
+/*.csproj
+/*.pidb
+/*.suo
+/*.sln*
+/*.user
+/*.unityproj
+/*.booproj
+
+# OS stuff
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+[Tt]humbs.db
+
+#Node and unity EA stuff
+web_template/node_modules/*
+unity_template/[Ll]ibrary/
+unity_template/[Pp]roject/
 *.meta
-*.mdb
-*.sln
-*.userprefs
-*.log
+
