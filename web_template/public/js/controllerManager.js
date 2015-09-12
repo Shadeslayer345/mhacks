@@ -24,17 +24,16 @@ $(document).ready(function () {
 
 	});
 
-	document.addEventListener('touchstart',function(e)
-				{
+	document.addEventListener('touchstart', function(e) {
 					xFirst = e.touches[0].pageX;
 					yFirst = e.touches[0].pageY;
 
 					ClickClick = true;
 					console.log("x location = " + xFirst);
 					console.log("y location = " + yFirst);
-				});
+	});
 
-				document.addEventListener('touchmove',function(e){
+				document.addEventListener('touchmove', function(e){
 					e.preventDefault();
 
 						if(xFirst != null)
@@ -47,13 +46,13 @@ $(document).ready(function () {
 							if ( xdiff > 1 || xdiff < -1 || ydiff > 1 || ydiff < -1)
 								ClickClick = false;
 							if (xdiff > 1 && xdiff > ydiff) {
-								conn.sendMessage({"direction": "right"});
+								//conn.sendMessage({"type":"direction", "direction": "right"});
 							} else if (xdiff < 1 && Math.abs(xdiff) > ydiff) {
-								conn.sendMessage({"direction": "left"});
+								//conn.sendMessage({"type":"direction", "direction": "left"});
 							} else if (ydiff > 1 && ydiff > xdiff) {
-								conn.sendMessage({"direction": "up"});
+								//conn.sendMessage({"type":"direction" ,"direction": "up"});
 							} else if (ydiff < 1 && Math.abs(ydiff) > xdiff) {
-								conn.sendMessage({"direction": "down"});
+								//conn.sendMessage({"type":"direction" ,"direction": "down"});
 							}
 						}
 
