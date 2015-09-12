@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class runnermovement : MonoBehaviour {
 	public float speed = 0.4f;
@@ -9,12 +10,12 @@ public class runnermovement : MonoBehaviour {
 		dest = transform.position;
 	}
 	
-	void OnCollision2D(Collider col) {
-		if (col.name == "player 2") {
-			
-			// die
-		}
-	}
+	void OnCollisionEnter2D(Collision2D coll) {
+		if (coll.gameObject.tag == "Chaser")
+			Debug.Log("Welcome to the C# Station Tutorial!");
+		
+	} 
+
 	
 	// Update is called once per frame
 	void FixedUpdate () {
