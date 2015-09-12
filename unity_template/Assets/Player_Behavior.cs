@@ -5,6 +5,8 @@ using BladeCast;
 
 public class Player_Behavior : MonoBehaviour {
 
+    public GameObject Main_Character;
+
 	// Use this for initialization
 	void Start () {
         InitControllerListeners();
