@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using BladeCast;
 
@@ -26,7 +27,7 @@ public class Player_Behavior : MonoBehaviour {
     void HandleRotate_ControllerInput(ControllerMessage msg) {
         if (msg.Payload.HasField("direction")) {
             string direction_value_raw = msg.Payload.GetField("direction").ToString();
-            if (direction_value_raw)) {
+            if (!System.IsNullOrEmpty(direction_value_raw)) {
                 print(direction_value_raw);
             }
         } else {
