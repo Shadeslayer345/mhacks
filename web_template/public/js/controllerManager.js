@@ -1,10 +1,11 @@
 $(document).ready(function () {
 	console.log("Document Loaded");
 
-	var playerNum = location.pathname.match(/\/maps\/(.*)/)[1];
+	var playerNum = location.pathname[1];
+	console.log(playerNum);
 
 	conn = new Connection();
-	conn.sendMessage({"type": "connect", "player": playerNum});
+	conn.sendMessage({"type": "connect"});
 
 	// Process incoming game messages
 	$(document).on("game_message", function (e, message) {
@@ -13,56 +14,6 @@ $(document).ready(function () {
 		//switch (payload.type) {
 			//your code here
 		//}
-	});
-
-	document.addEventListener('touchstart',function(e) {
-		xFirst = e.touches[0].pageX;
-		yFirst = e.touches[0].pageY;
-
-		ClickClick = true;
-		console.log("x location = " + xFirst);
-		console.log("y location = " + yFirst);
-	});
-
-	document.addEventListener('touchmove', function(e) {
-		e.preventDefault();
-
-		if(xFirst != null) {
-			xCurrent = e.touches[0].pageX;
-			yCurrent = e.touches[0].pageY;
-
-			xdiff = xCurrent - xFirst;
-			ydiff = yCurrent - yFirst;
-
-			if ( xdiff > 1 || xdiff < -1 || ydiff > 1 || ydiff < -1)
-				ClickClick = false;
-
-			if (xdiff > 1 && xdiff > ydiff) {
-				conn.sendMessage({"direction": "right"});
-			} else if (xdiff < 1 && Math.abs(xdiff) > ydiff) {
-				conn.sendMessage({"direction": "left"});
-			} else if (ydiff > 1 && ydiff > xdiff) {
-				conn.sendMessage({"direction": "up"});
-			} else if (ydiff < 1 && Math.abs(ydiff) > xdiff) {
-				conn.sendMessage({"direction": "down"});
-			}
-		}
-	});
-
-	document.addEventListener('touchend',function(e) {
-		if(ClickClick == true) {
-			console.log("tapped");
-			ClickClick = false;
-		} else {
-			console.log("End");
-		}
-
-		xCurrent = null;
-		yCurrent = null;
-		xFirst = null;
-		yFirst = null;
-		xdiff = null;
-		ydiff = null;
 	});
 
 	document.addEventListener('touchstart',function(e){
@@ -102,16 +53,16 @@ $(document).ready(function () {
 
 		if ((angle > 330) || (angle < 30)) {
 			console.log("Swiped Up");
-			conn.sendMessage({"type": "movement", "movement": "Up"}, 0);
+			conn.sendMessage({"type": "movement", "movement": "Up", "player": playerNum}, 0);
 		} else if((angle > 240) && (angle < 300)) {
 			console.log("Swiped Right");
-			conn.sendMessage({"type": "movement", "movement": "Right"}, 0);
+			conn.sendMessage({"type": "movement", "movement": "Right", "player": playerNum}, 0);
 		} else if ((angle > 150) && (angle < 210)) {
 			console.log("Swiped Down");
-			conn.sendMessage({"type": "movement", "movement": "Down"}, 0);
+			conn.sendMessage({"type": "movement", "movement": "Down", "player": playerNum}, 0);
 		} else if ((angle > 60) && (angle < 120)) {
 			console.log("Swiped Left");
-			conn.sendMessage({"type": "movement", "movement": "Left"}, 0);
+			conn.sendMessage({"type": "movement", "movement": "Left", "player": playerNum}, 0);
 		}
 	});
 
