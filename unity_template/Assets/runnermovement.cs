@@ -4,42 +4,31 @@ using System;
 
 public class runnermovement : MonoBehaviour {
 	public float speed = 0.4f;
-	Vector2 dest = Vector2.zero;
+	Vector3 destination = Vector3.zero;
 	// Use this for initialization
 	void Start () {
-		dest = transform.position;
+		destination = transform.position;
 	}
 	
-	void OnCollisionEnter2D(Collision2D coll) {
+	void OnCollisionEnter(Collision coll) {
 		if (coll.gameObject.tag == "Chaser")
-			Debug.Log("Welcome to the C# Station Tutorial!");
+			Debug.Log("Ran into Chaser");
 		
 	} 
-
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		// Move closer to Destination
-		Vector2 p = Vector2.MoveTowards(transform.position, dest, speed);
-		GetComponent<Rigidbody2D>().MovePosition(p);
-
-
-		
 		if (Input.GetKey ("i")) {
-			Vector3 destination = new Vector3 (transform.position.x, 3, transform.position.z + 0.1f);
-			transform.position = destination;
+			transform.position = new Vector3 (transform.position.x, 0, transform.position.z + 0.1f);
 		}
 		if (Input.GetKey ("j")) {
-			Vector3 destination = new Vector3 (transform.position.x - 0.1f, 3, transform.position.z);
-			transform.position = destination;
+			transform.position = new Vector3 (transform.position.x - 0.1f, 0, transform.position.z);
 		}
 		if (Input.GetKey ("k")) {
-			Vector3 destination = new Vector3 (transform.position.x, 3, transform.position.z - 0.1f);
-			transform.position = destination;
+			transform.position = new Vector3 (transform.position.x, 0, transform.position.z - 0.1f);
 		}
 		if (Input.GetKey ("l")) {
-			Vector3 destination = new Vector3 (transform.position.x + 0.1f, 3, transform.position.z);
-			transform.position = destination;
+			transform.position = new Vector3 (transform.position.x + 0.1f, 0, transform.position.z);
 		}
 		
 		// Check for Input if not moving

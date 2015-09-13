@@ -1,42 +1,83 @@
 ﻿using UnityEngine;
 using System.Collections;
+using BladeCast;
 
 public class ChaserMovement : MonoBehaviour {
 	public float speed = 0.4f;
-	Vector2 dest = Vector2.zero;
+	Vector3 destination = Vector3.zero;
 	// Use this for initialization
 	void Start () {
-		dest = transform.position;
+		destination = transform.position;
 	}
 
-	void OnCollision2D(Collider col) {
-		if (col.name == "player 2") {
 
-			// die
+	/**void  InitControllerListeners() {
+		BCMessenger.Instance.RegisterListener("connect", 0, this.gameObject, "HandleControllerRegister");
+		BCMessenger.Instance.RegisterListener("movement", 0, this.gameObject, "HandleRotate_ControllerMovement");
+	}
+
+	void HandleControllerRegister() {
+		print("Connected to controller");
+	}
+
+	void HandleMovement(ControllerMessage msg) {
+		if (msg.Payload.HasField ("movement") && msg.Payload.HasField ("player") && int.Parse(msg.Payload.GetField("player").ToString()) == 1) {
+			string temp = msg.Payload.GetField("movement").ToString();
+			Vector3 p = Vector3.MoveTowards(transform.position, dest, speed);
+			//GetComponent<Rigidbody>().MovePosition(p);
+			switch (temp) {
+			case "Up":
+					transform.position = (new Vector3 (transform.position.x, 3, transform.position.z + 0.1f)); break;
+			case "Down":
+				transform.position = new Vector3 (transform.position.x, 3, transform.position.z - 0.1f);break;
+			case "Left":
+				transform.position = new Vector3 (transform.position.x - 0.1f, 3, transform.position.z); break;
+			case "Right":
+				transform.position = new Vector3 (transform.position.x + 0.1f, 3, transform.position.z); break;
+			}
+
+		} else {
+			print ("angle field did not exist");
 		}
+	}*/
+
+	Vector3 moveUp() {
+		return new Vector3 (transform.position.x, 0, transform.position.z + 0.1f);
+	}
+
+	Vector3 moveLeft() {
+		return new Vector3 (transform.position.x - 0.1f, 0, transform.position.z);
+	}
+
+	Vector3 moveDown() {
+		return new Vector3 (transform.position.x, 0, transform.position.z - 0.1f);
+	}
+
+	Vector3 moveRight() {
+		return new Vector3 (transform.position.x + 0.1f, 0, transform.position.z);
+	}
+	
+	void OnCollision(Collider col) {
+		Debug.Log ("Chase Hit Something.");
+		if (col.gameObject.tag == "Runner")
+			Debug.Log("Ran into Runner!");
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
 		// Move closer to Destination
-		Vector2 p = Vector2.MoveTowards(transform.position, dest, speed);
-		GetComponent<Rigidbody2D>().MovePosition(p);
-
 		if (Input.GetKey ("w")) {
-			Vector3 destination = new Vector3 (transform.position.x, 3, transform.position.z + 0.1f);
-			transform.position = destination;
+			//destination = moveUp();
+			transform.position = moveUp();
 		}
 		if (Input.GetKey ("a")) {
-			Vector3 destination = new Vector3 (transform.position.x - 0.1f, 3, transform.position.z);
-			transform.position = destination;
+			transform.position = moveLeft();
 		}
 		if (Input.GetKey ("s")) {
-			Vector3 destination = new Vector3 (transform.position.x, 3, transform.position.z - 0.1f);
-			transform.position = destination;
+			transform.position = moveDown();
 		}
 		if (Input.GetKey ("d")) {
-			Vector3 destination = new Vector3 (transform.position.x + 0.1f, 3, transform.position.z);
-			transform.position = destination;
+			transform.position = moveRight();
 		}
 
 	// Check for Input if not moving
@@ -52,9 +93,9 @@ public class ChaserMovement : MonoBehaviour {
 				dest = (Vector2)transform.position - Vector2.right;
 		}*/
 	}
-	bool valid(Vector2 dir) {
+	bool valid(Vector3 dir) {
 		// Cast Line from 'next to Pac-Man' to 'Pac-Man'
-		Vector2 pos = transform.position;
+		Vector3 pos = transform.position;
 		RaycastHit2D hit = Physics2D.Linecast(pos + dir, pos);
 		return (hit.collider == GetComponent<Collider2D>());
 	}
