@@ -8,7 +8,6 @@ public class ChaserMovement : MonoBehaviour {
 	Vector3 destination = Vector3.zero;
 
 	void Start () {
-		System.Random rnd = new System.Random();
 		int starting_x = UnityEngine.Random.Range(-12, -9);
 		int starting_z = UnityEngine.Random.Range(-5, 6);
 		transform.position = new Vector3(starting_x,0,starting_z);
