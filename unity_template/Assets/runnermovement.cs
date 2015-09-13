@@ -7,6 +7,10 @@ public class runnermovement : MonoBehaviour {
 	Vector3 destination = Vector3.zero;
 	// Use this for initialization
 	void Start () {
+		System.Random rnd = new System.Random();
+		int starting_x = rnd.Next(10, 13);
+		int starting_z = rnd.Next(-5, 6);
+		transform.position = new Vector3(starting_x,0,starting_z);
 		destination = transform.position;
 	}
 	

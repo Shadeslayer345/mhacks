@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using BladeCast;
+using System;
 
 public class ChaserMovement : MonoBehaviour {
 	public float speed = 0.4f;
 	Vector3 destination = Vector3.zero;
 	// Use this for initialization
+
+
 	void Start () {
+		System.Random rnd = new System.Random();
+		int starting_x = UnityEngine.Random.Range(-12, -9);
+		int starting_z = UnityEngine.Random.Range(-5, 6);
+		transform.position = new Vector3(starting_x,0,starting_z);
 		destination = transform.position;
 	}
 
