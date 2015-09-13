@@ -1,12 +1,10 @@
 $(document).ready(function () {
-	console.log("Document Loaded");
-
-	var playerNum = location.pathname[0];
+	var playerNum = location.pathname[1];
 
 	conn = new Connection();
-	conn.sendMessage({"type": "connect", "player": playerNum});
+	conn.sendMessage({"type": "connect"});
 
-	// Process incoming game messages
+	// Process incoming game messages for two interaction
 	$(document).on("game_message", function (e, message) {
 		console.log("Received Message: " + JSON.stringify(message));
 		var payload = message.payload;
@@ -15,7 +13,7 @@ $(document).ready(function () {
 		//}
 	});
 
-	document.addEventListener('touchstart',function(e){
+	document.addEventListener('touchstart', function(e) {
 		var imgCursor = document.getElementById('pacman_cursor');
 		var widthCursor = imgCursor.width;
 		var heightCursor = imgCursor.height;
@@ -52,16 +50,16 @@ $(document).ready(function () {
 
 		if ((angle > 330) || (angle < 30)) {
 			console.log("Swiped Up");
-			conn.sendMessage({"type": "movement", "movement": "Up"}, 0);
+			conn.sendMessage({"type": "movement", "movement": "Up", "player": playerNum}, 0);
 		} else if((angle > 240) && (angle < 300)) {
 			console.log("Swiped Right");
-			conn.sendMessage({"type": "movement", "movement": "Right"}, 0);
+			conn.sendMessage({"type": "movement", "movement": "Right", "player": playerNum}, 0);
 		} else if ((angle > 150) && (angle < 210)) {
 			console.log("Swiped Down");
-			conn.sendMessage({"type": "movement", "movement": "Down"}, 0);
+			conn.sendMessage({"type": "movement", "movement": "Down", "player": playerNum}, 0);
 		} else if ((angle > 60) && (angle < 120)) {
 			console.log("Swiped Left");
-			conn.sendMessage({"type": "movement", "movement": "Left"}, 0);
+			conn.sendMessage({"type": "movement", "movement": "Left", "player": playerNum}, 0);
 		}
 	});
 
@@ -80,5 +78,4 @@ $(document).ready(function () {
 
 		$("#pacman_cursor").hide();
 	});
-
 });
