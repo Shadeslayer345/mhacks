@@ -1,6 +1,8 @@
 $(document).ready(function () {
+	// Parse the url to determine which player is calling the shots.
 	var playerNum = location.pathname[1];
 
+	// The initial communication with Unity through EA API
 	conn = new Connection();
 	conn.sendMessage({"type": "connect"});
 
@@ -13,6 +15,10 @@ $(document).ready(function () {
 		//}
 	});
 
+	/**
+	 * On the user's first touch
+	 * @param  {DOM event} e
+	 */
 	document.addEventListener('touchstart', function(e) {
 		var imgCursor = document.getElementById('pacman_cursor');
 		var widthCursor = imgCursor.width;
@@ -27,6 +33,10 @@ $(document).ready(function () {
 		$("#pacman_cursor").show();
 	});
 
+	/**
+	 * As the user swipes, let's take the angle
+	 * @param  {Dom element} e)
+	 */
 	document.addEventListener('touchmove', function(e) {
 		e.preventDefault();
 		var imgCursor = document.getElementById('pacman_cursor');
@@ -63,6 +73,11 @@ $(document).ready(function () {
 		}
 	});
 
+	/**
+	 * When the user is finished with an interaction, let's reset our
+	 * 			positions.
+	 * @param  {DOM element} e)
+	 */
 	document.addEventListener('touchend', function(e) {
 		if(ClickClick == true) {
 			console.log("tapped");
