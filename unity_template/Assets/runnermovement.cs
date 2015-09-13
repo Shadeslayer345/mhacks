@@ -49,6 +49,7 @@ public class runnermovement : MonoBehaviour {
 	void OnCollisionEnter(Collision coll) {
 		if (coll.gameObject.tag == "Chaser")
 			Debug.Log("Ran into Chaser");
+			BCMessenger.Instance.SendToListeners("collide", -1);
 	}
 
 	void FixedUpdate () {}
