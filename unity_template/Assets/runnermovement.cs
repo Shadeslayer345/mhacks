@@ -4,51 +4,44 @@ using System;
 
 public class runnermovement : MonoBehaviour {
 	public float speed = 0.4f;
-	Vector3 destination = Vector3.zero;
-	// Use this for initialization
+
 	void Start () {
 		destination = transform.position;
+		InitControllerListeners();
 	}
-	
+
+	InitControllerListeners() {
+		BCMessenger.Instance.RegisterListener("connect", 0, this.gameObject, "HandleControllerRegister");
+		BCMessenger.Instance.RegisterListener("movement", 0, this.gameObject, "HandleRotate_ControllerMovement");
+	}
+
+	HandleControllerRegister() {
+		print("Controller Connected");
+	}
+
+	HandleRotate_ControllerMovement(ControllerMessage msg) {
+		if (msg.Payload.HasField ("movement") && msg.Payload.HasField ("player") && int.Parse(msg.Payload.GetField("player").ToString()) == 1) {
+			string temp = msg.Payload.GetField("movement").ToString();
+			switch (temp) {
+			case "Up":
+					transform.position = new Vector3 (transform.position.x, 3, transform.position.z + 0.1f); break;
+			case "Down":
+				transform.position = new Vector3 (transform.position.x, 3, transform.position.z - 0.1f);break;
+			case "Left":
+				transform.position = new Vector3 (transform.position.x - 0.1f, 3, transform.position.z); break;
+			case "Right":
+				transform.position = new Vector3 (transform.position.x + 0.1f, 3, transform.position.z); break;
+			}
+		} else {
+			print ("angle field or player not specified");
+		}
+	}
+
 	void OnCollisionEnter(Collision coll) {
 		if (coll.gameObject.tag == "Chaser")
 			Debug.Log("Ran into Chaser");
-		
-	} 
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-		if (Input.GetKey ("i")) {
-			transform.position = new Vector3 (transform.position.x, 0, transform.position.z + 0.1f);
-		}
-		if (Input.GetKey ("j")) {
-			transform.position = new Vector3 (transform.position.x - 0.1f, 0, transform.position.z);
-		}
-		if (Input.GetKey ("k")) {
-			transform.position = new Vector3 (transform.position.x, 0, transform.position.z - 0.1f);
-		}
-		if (Input.GetKey ("l")) {
-			transform.position = new Vector3 (transform.position.x + 0.1f, 0, transform.position.z);
-		}
-		
-		// Check for Input if not moving
-		/*if ((Vector2)transform.position == dest) {
-			Debug.Log("At destination");
-			if (Input.GetKey (KeyCode.UpArrow) && valid(Vector2.up))
-				dest = (Vector2)transform.position + Vector2.up;
-			if (Input.GetKey (KeyCode.RightArrow) && valid(Vector2.right))
-				dest = (Vector2)transform.position + Vector2.right;
-			if (Input.GetKey (KeyCode.DownArrow) && valid(-Vector2.up))
-				dest = (Vector2)transform.position - Vector2.up;
-			if (Input.GetKey (KeyCode.LeftArrow) && valid(-Vector2.right))
-				dest = (Vector2)transform.position - Vector2.right;
-		}*/
 	}
-	bool valid(Vector2 dir) {
-		// Cast Line from 'next to Pac-Man' to 'Pac-Man'
-		Vector2 pos = transform.position;
-		RaycastHit2D hit = Physics2D.Linecast(pos + dir, pos);
-		return (hit.collider == GetComponent<Collider2D>());
-	}
+
+	void FixedUpdate () {}
 }
 
