@@ -7,14 +7,14 @@ sysinfo.txt
 
 [Ee]xported[Oo]bj/
 .vs/
-/*.userperfs
-/*.csproj
-/*.pidb
-/*.suo
-/*.sln*
-/*.user
-/*.unityproj
-/*.booproj
+*.userperfs
+*.csproj
+*.pidb
+*.suo
+*.sln*
+*.user
+*.unityproj
+*.booproj
 
 # OS stuff
 .DS_Store*
